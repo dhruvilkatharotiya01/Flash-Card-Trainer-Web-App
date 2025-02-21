@@ -1,0 +1,13 @@
+version: '3.8'  # Specify the version of Docker Compose
+
+services:
+  app:  # Name of the service
+    image: flashcard  # Replace with your Docker image name
+    build: .
+    ports:
+      - "3000:3000"  # Map port 80 in the container to port 8080 on the host
+    volumes:
+      - .:/app  # Mount the current directory to /app in the container
+    
+
+# Add other services like databases if needed

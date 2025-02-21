@@ -1,0 +1,112 @@
+{
+    "bike": [
+        {
+            "question": "no. of wheel in activa",
+            "answer": "2",
+            "color": "#cbf0f8"
+        },
+        {
+            "question": "no. of mirror in vespa",
+            "answer": "2",
+            "color": "#fff475"
+        }
+    ],
+    "science": [
+        {
+            "question": "chapters ?",
+            "answer": "10",
+            "color": "#d7aefb"
+        },
+        {
+            "question": "E= ?",
+            "answer": "MC^2",
+            "hint": "Energy Equation",
+            "color": "#d7aefb"
+        }
+    ],
+    "cities": [
+        {
+            "question": "Where is Mumbai ?",
+            "answer": "india",
+            "color": "#a7ffeb"
+        }
+    ],
+    "chairs": [
+        {
+            "question": "fff",
+            "answer": "fff",
+            "color": "#fbbc04"
+        }
+    ],
+    "wheel": [
+        {
+            "question": "shape ",
+            "answer": "round",
+            "color": "#f28b82"
+        },
+        {
+            "question": "color",
+            "answer": "black",
+            "color": "#d7aefb"
+        }
+    ],
+    "Games": [
+        {
+            "question": "who is the character in subway surfer ?",
+            "answer": "Boy",
+            "hint": "B",
+            "color": "#a7ffeb"
+        },
+        {
+            "question": "temple ___ name of game ",
+            "answer": "run",
+            "hint": "fast",
+            "color": "#cbf0f8"
+        }
+    ],
+    "friend": [],
+    "Dhruvil": [
+        {
+            "question": "My name is _____",
+            "answer": "Dhruvil",
+            "hint": "DK",
+            "color": "#aecbfa"
+        }
+    ],
+    "DK": [
+        {
+            "question": "Dhruvil",
+            "answer": "Kathrotiya",
+            "hint": "Surname",
+            "color": "#cbf0f8"
+        }
+    ],
+    "Subject": [
+        {
+            "question": "Subject Name",
+            "answer": "Software Engineering",
+            "hint": "SE",
+            "color": "#cbf0f8"
+        },
+        {
+            "question": "Subject2",
+            "answer": "Machine Perception",
+            "hint": "MP",
+            "color": "#fff475"
+        }
+    ],
+    "Bhagat": [
+        {
+            "question": "Name",
+            "answer": "BHagat",
+            "hint": "swaminarayan",
+            "color": "#cbf0f8"
+        },
+        {
+            "question": "Color",
+            "answer": "Orange",
+            "hint": "santru",
+            "color": "#a7ffeb"
+        }
+    ]
+}
