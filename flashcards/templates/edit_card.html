@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block crumbs %}<span class="crumb">/ <a href="{{ url_for('main.deck', name=name) }}">{{ name }}</a> / edit</span>{% endblock %}
+{% block content %}
+<section class="panel narrow">
+  <h1>Edit card</h1>
+  <form class="stack" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label>Question <input name="question" value="{{ card.question }}" required></label>
+    <label>Answer <input name="answer" value="{{ card.answer }}" required></label>
+    <label><span>Hint <span class="muted">(optional)</span></span> <input name="hint" value="{{ card.hint }}"></label>
+    <div class="row">
+      <button class="btn">Save</button>
+      <a href="{{ url_for('main.deck', name=name) }}">Cancel</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

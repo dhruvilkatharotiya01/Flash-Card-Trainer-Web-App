@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+  <h1>Your decks</h1>
+  {% if decks %}
+  <ul class="deck-list">
+    {% for d in decks %}
+    <li>
+      <a class="deck-link" href="{{ url_for('main.deck', name=d.name) }}">{{ d.name }}</a>
+      <span class="muted">{{ d.total }} card{{ '' if d.total == 1 else 's' }}</span>
+      {% if d.due %}<span class="badge">{{ d.due }} due</span>{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="muted">No decks yet. Create one below.</p>
+  {% endif %}
+</section>
+<section class="panel">
+  <h2>New deck</h2>
+  <form class="inline" method="post" action="{{ url_for('main.create_deck') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <input name="name" placeholder="e.g. German vocabulary" maxlength="60" required aria-label="Deck name">
+    <button class="btn">Create</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block crumbs %}<span class="crumb">/ <a href="{{ url_for('main.deck', name=name) }}">{{ name }}</a> / study</span>{% endblock %}
+{% block content %}
+<section class="panel narrow">
+  {% if result %}
+    <div class="feedback {{ 'ok' if result.correct else 'bad' }}">
+      {% if result.correct %}Correct!{% else %}The answer was <strong>{{ result.card.answer }}</strong>.{% endif %}
+    </div>
+  {% endif %}
+  {% if card %}
+    <p class="muted">{{ remaining }} card{{ '' if remaining == 1 else 's' }} due · box {{ card.box or 1 }} of 5</p>
+    <div class="flashcard" style="--card: {{ card.color }}"><p class="q">{{ card.question }}</p></div>
+    <form class="stack" method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <input type="hidden" name="card_id" value="{{ card.id }}">
+      <input name="answer" placeholder="Your answer" autofocus autocomplete="off" aria-label="Your answer">
+      {% if card.hint %}<details><summary>Show hint</summary>{{ card.hint }}</details>{% endif %}
+      <div class="row">
+        <button class="btn" name="action" value="answer">Check</button>
+        <button class="btn btn-secondary" name="action" value="reveal">I don't know</button>
+      </div>
+    </form>
+  {% else %}
+    <h1>All done for now</h1>
+    <p>No cards are due in this deck. Cards you know well come back after longer breaks
+       (1, 3, 7 and 14 days); cards you miss come back right away.</p>
+    <a class="btn" href="{{ url_for('main.deck', name=name) }}">Back to deck</a>
+  {% endif %}
+</section>
+{% endblock %}

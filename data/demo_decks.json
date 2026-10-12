@@ -1,0 +1,75 @@
+{
+  "decks": {
+    "German basics": [
+      {
+        "question": "Thank you",
+        "answer": "Danke",
+        "hint": ""
+      },
+      {
+        "question": "Good morning",
+        "answer": "Guten Morgen",
+        "hint": ""
+      },
+      {
+        "question": "the train station",
+        "answer": "der Bahnhof",
+        "hint": "starts with B"
+      },
+      {
+        "question": "How much does it cost?",
+        "answer": "Wie viel kostet das?",
+        "hint": ""
+      },
+      {
+        "question": "Excuse me",
+        "answer": "Entschuldigung",
+        "hint": ""
+      }
+    ],
+    "Machine learning": [
+      {
+        "question": "Algorithm that splits data into k groups by distance",
+        "answer": "k-means",
+        "hint": "unsupervised"
+      },
+      {
+        "question": "Metric: true positives / (true positives + false positives)",
+        "answer": "precision",
+        "hint": ""
+      },
+      {
+        "question": "Technique that randomly drops neurons during training",
+        "answer": "dropout",
+        "hint": "regularisation"
+      },
+      {
+        "question": "Optimiser that combines momentum and RMSProp",
+        "answer": "Adam",
+        "hint": ""
+      }
+    ],
+    "Capital cities": [
+      {
+        "question": "Capital of Germany",
+        "answer": "Berlin",
+        "hint": ""
+      },
+      {
+        "question": "Capital of India",
+        "answer": "New Delhi",
+        "hint": ""
+      },
+      {
+        "question": "Capital of Austria",
+        "answer": "Vienna",
+        "hint": "Wien in German"
+      },
+      {
+        "question": "Capital of Switzerland",
+        "answer": "Bern",
+        "hint": ""
+      }
+    ]
+  }
+}

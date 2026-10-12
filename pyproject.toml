@@ -1,0 +1,16 @@
+[project]
+name = "flashcard-trainer"
+version = "1.0.0"
+description = "Flask flashcard app with spaced-repetition study mode and exams"
+requires-python = ">=3.10"
+dependencies = ["flask>=3.0", "gunicorn>=22.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]

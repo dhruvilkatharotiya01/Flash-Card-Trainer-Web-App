@@ -1,0 +1,48 @@
+:root {
+  --bg: #f4f5f9; --panel: #fff; --text: #1d2433; --muted: #667085; --line: #e3e6ee;
+  --accent: #3b5998; --accent-dark: #2f4a80; --ok: #e7f6ec; --ok-text: #146c2e; --bad: #fdecec; --bad-text: #a4161a;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+a { color: var(--accent); }
+.topbar { display: flex; gap: .5rem; align-items: baseline; padding: 1rem 1.25rem; background: var(--accent); color: #fff; }
+.topbar a { color: #fff; }
+.brand { font-weight: 700; text-decoration: none; font-size: 1.15rem; }
+.crumb { opacity: .9; }
+.page { max-width: 960px; margin: 1.5rem auto; padding: 0 1rem; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+.narrow { max-width: 560px; margin-left: auto; margin-right: auto; }
+.center { text-align: center; justify-content: center; }
+h1 { margin: 0 0 .75rem; font-size: 1.6rem; } h2 { margin: 0 0 .75rem; font-size: 1.15rem; }
+.muted { color: var(--muted); }
+.row { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; justify-content: space-between; }
+.actions { display: flex; gap: .5rem; }
+.stack { display: grid; gap: .75rem; } .stack label { display: grid; gap: .25rem; font-weight: 600; }
+.inline { display: flex; gap: .5rem; }
+input { font: inherit; padding: .6rem .75rem; border: 1px solid var(--line); border-radius: 8px; width: 100%; }
+input:focus { outline: 2px solid var(--accent); border-color: transparent; }
+.btn { display: inline-block; font: inherit; font-weight: 600; padding: .6rem 1rem; border: 0; border-radius: 8px; background: var(--accent); color: #fff; text-decoration: none; cursor: pointer; white-space: nowrap; }
+.btn:hover { background: var(--accent-dark); }
+.btn-secondary { background: #e8ecf6; color: var(--accent); } .btn-secondary:hover { background: #dbe2f2; }
+.link { background: none; border: 0; padding: 0; font: inherit; color: var(--accent); cursor: pointer; text-decoration: underline; }
+.danger { color: var(--bad-text); } .danger-zone { text-align: right; margin: 0 .5rem 2rem; }
+.flash { padding: .75rem 1rem; border-radius: 8px; margin-bottom: 1rem; background: var(--ok); color: var(--ok-text); }
+.flash-error { background: var(--bad); color: var(--bad-text); }
+.deck-list { list-style: none; padding: 0; margin: 0; }
+.deck-list li { display: flex; gap: .75rem; align-items: center; padding: .6rem 0; border-bottom: 1px solid var(--line); }
+.deck-list li:last-child { border-bottom: 0; }
+.deck-link { font-weight: 600; flex: 1; }
+.badge { background: #fff3cd; color: #7a5a00; border-radius: 999px; padding: .1rem .6rem; font-size: .85rem; font-weight: 600; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .75rem; margin-top: .5rem; }
+.card { background: color-mix(in srgb, var(--card) 35%, white); border: 1px solid color-mix(in srgb, var(--card) 70%, black 5%); border-radius: 10px; padding: .85rem; display: flex; flex-direction: column; gap: .25rem; }
+.card p { margin: 0; } .card .q { font-weight: 700; } .card .hint, .card .meta { font-size: .85rem; color: var(--muted); }
+.card-actions { display: flex; gap: .75rem; margin-top: auto; padding-top: .5rem; font-size: .9rem; }
+.flashcard { background: color-mix(in srgb, var(--card) 40%, white); border-radius: 12px; padding: 2rem 1.25rem; text-align: center; margin: .5rem 0 1rem; font-size: 1.3rem; font-weight: 700; }
+.flashcard p { margin: 0; }
+.feedback { padding: .75rem 1rem; border-radius: 8px; margin-bottom: 1rem; }
+.feedback.ok { background: var(--ok); color: var(--ok-text); } .feedback.bad { background: var(--bad); color: var(--bad-text); }
+.progress { height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.progress span { display: block; height: 100%; background: var(--accent); }
+.scores { color: var(--muted); text-align: center; margin: 1rem 0 0; }
+details { color: var(--muted); }
+@media (max-width: 560px) { .inline { flex-direction: column; } .row .btn { flex: 1; text-align: center; } }

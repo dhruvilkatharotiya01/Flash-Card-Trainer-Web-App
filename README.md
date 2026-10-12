@@ -1,93 +1,89 @@
-# Team11
+# Flashcard Trainer
 
+[![ci](https://github.com/dhruvilkatharotiya01/Flash-Card-Trainer-Web-App/actions/workflows/ci.yml/badge.svg)](https://github.com/dhruvilkatharotiya01/Flash-Card-Trainer-Web-App/actions/workflows/ci.yml)
 
+A small Flask web app for learning with flashcards. Create decks, add cards with
+optional hints, practise with a **spaced-repetition study mode**, or take an
+**exam** over a whole deck and get a score.
 
-## Getting started
+| Decks | Study mode |
+|---|---|
+| ![Deck view](docs/deck.png) | ![Study mode](docs/study.png) |
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Features
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- **Decks and cards**: create, edit and delete; optional hints; colour-coded cards
+- **Study mode with spaced repetition** (Leitner system): every card sits in one of five
+  boxes. A correct answer moves it up a box and it comes back after 1, 3, 7 or 14 days;
+  a wrong answer sends it back to box 1 so it is asked again straight away. The hardest
+  cards are shown first.
+- **Exam mode**: goes through the whole deck in random order, counts right, wrong and
+  skipped answers and shows a final score
+- **Lenient answer checking**: ignores case, punctuation, extra spaces and articles
+  ("the k-means" = "k-means")
+- **Safe by default**: CSRF tokens on every form, secret key from the environment,
+  escaped output, debug mode off, atomic file writes
+- Tests, linting, Docker image and GitHub Actions CI
 
-## Add your files
+## Run it
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements-dev.txt
+python app.py                      # http://127.0.0.1:5000
+```
+
+The first start creates `instance/flashcards.json` with three demo decks.
+
+With Docker:
+
+```bash
+docker compose up --build          # http://localhost:8000
+```
+
+Set `SECRET_KEY` to a long random value in production (`openssl rand -hex 32`).
+
+## Tests
+
+```bash
+python -m pytest -q                # 20 tests: scheduler, storage, answer checking, routes
+ruff check . && ruff format --check .
+```
+
+## How it is built
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/thi-wi/sweng/m-egm/team11.git
-git branch -M main
-git push -uf origin main
+app.py                 development entry point (gunicorn uses app:app)
+flashcards/
+  __init__.py          app factory, configuration, CSRF check, error pages
+  routes.py            decks, cards, study and exam routes
+  scheduler.py         Leitner spaced-repetition scheduling
+  answers.py           answer normalisation and comparison
+  storage.py           JSON storage with atomic writes and a write lock
+  templates/, static/  Jinja templates with one shared layout, one stylesheet
+data/demo_decks.json   demo content loaded on first start
+tests/                 unit and Flask test-client tests
 ```
 
-## Integrate with your tools
+Storage is a single JSON file because the data is small and it keeps the app
+dependency-free; `storage.py` is the only module that would change to use SQLite
+or PostgreSQL. The exam state lives in the signed session cookie.
 
-- [ ] [Set up project integrations](https://gitlab.com/thi-wi/sweng/m-egm/team11/-/settings/integrations)
+## Background
 
-## Collaborate with your team
+The app started as a team project (Team 11) in the Software Engineering course at
+Technische Hochschule Ingolstadt, where it was developed on GitLab with Docker-based
+CI/CD. This repository is my continued version. Compared with the course version it:
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+- fixes exam scores that were not saved between questions (nested session data was
+  changed in place, so Flask never stored it)
+- turns the unused review-interval class into a working spaced-repetition study mode
+- moves the inline HTML into Jinja templates with a shared layout and stylesheet
+- adds CSRF protection, environment-based configuration and stable card IDs
+  (cards were addressed by list position before), plus tests and CI
 
 ## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+- [ ] User accounts so several people can keep their own decks
+- [ ] Import and export of decks as CSV
+- [ ] SQLite storage

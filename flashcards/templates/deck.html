@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{ name }} · Flashcard Trainer{% endblock %}
+{% block crumbs %}<span class="crumb">/ {{ name }}</span>{% endblock %}
+{% block content %}
+<section class="panel">
+  <div class="row">
+    <h1>{{ name }}</h1>
+    <div class="actions">
+      <a class="btn" href="{{ url_for('main.study', name=name) }}">Study{% if due %} ({{ due }} due){% endif %}</a>
+      <form method="post" action="{{ url_for('main.start_exam', name=name) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <input type="hidden" name="shuffle" value="1">
+        <button class="btn btn-secondary">Take exam</button>
+      </form>
+    </div>
+  </div>
+  {% if cards %}
+  <div class="cards">
+    {% for card in cards %}
+    <article class="card" style="--card: {{ card.color }}">
+      <p class="q">{{ card.question }}</p>
+      <p class="a">{{ card.answer }}</p>
+      {% if card.hint %}<p class="hint">Hint: {{ card.hint }}</p>{% endif %}
+      <p class="meta">Box {{ card.box or 1 }} of 5{% if card.reviews %} · {{ card.correct }}/{{ card.reviews }} correct{% endif %}</p>
+      <div class="card-actions">
+        <a href="{{ url_for('main.edit_card', name=name, card_id=card.id) }}">Edit</a>
+        <form method="post" action="{{ url_for('main.delete_card', name=name, card_id=card.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <button class="link danger">Delete</button>
+        </form>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="muted">This deck is empty.</p>
+  {% endif %}
+</section>
+<section class="panel">
+  <h2>Add a card</h2>
+  <form class="stack" method="post" action="{{ url_for('main.add_card', name=name) }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label>Question <input name="question" required></label>
+    <label>Answer <input name="answer" required></label>
+    <label><span>Hint <span class="muted">(optional)</span></span> <input name="hint"></label>
+    <button class="btn">Add card</button>
+  </form>
+</section>
+<form class="danger-zone" method="post" action="{{ url_for('main.delete_deck', name=name) }}"
+      onsubmit="return confirm('Delete the deck and all its cards?')">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <button class="link danger">Delete this deck</button>
+</form>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block crumbs %}<span class="crumb">/ <a href="{{ url_for('main.deck', name=name) }}">{{ name }}</a> / results</span>{% endblock %}
+{% block content %}
+<section class="panel narrow center">
+  <h1>{{ percent }}%</h1>
+  <p>{{ scores.right }} of {{ total }} correct · {{ scores.wrong }} wrong · {{ scores.skipped }} skipped</p>
+  <div class="row center">
+    <form method="post" action="{{ url_for('main.start_exam', name=name) }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <input type="hidden" name="shuffle" value="1">
+      <button class="btn">Try again</button>
+    </form>
+    <a class="btn btn-secondary" href="{{ url_for('main.study', name=name) }}">Study due cards</a>
+  </div>
+</section>
+{% endblock %}

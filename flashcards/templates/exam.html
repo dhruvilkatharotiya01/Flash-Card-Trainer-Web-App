@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block crumbs %}<span class="crumb">/ <a href="{{ url_for('main.deck', name=name) }}">{{ name }}</a> / exam</span>{% endblock %}
+{% block content %}
+<section class="panel narrow">
+  {% if last %}
+    <div class="feedback {{ 'ok' if last.correct else 'bad' }}">
+      {% if last.correct %}Correct!{% else %}Not quite: the answer was <strong>{{ last.answer }}</strong>.{% endif %}
+    </div>
+  {% endif %}
+  <div class="progress" aria-label="Progress"><span style="width: {{ (100 * (number - 1) / total)|round|int }}%"></span></div>
+  <p class="muted">Question {{ number }} of {{ total }}</p>
+  <div class="flashcard" style="--card: {{ card.color }}"><p class="q">{{ card.question }}</p></div>
+  <form class="stack" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    {% if state.revealed %}
+      <p class="answer">Answer: <strong>{{ card.answer }}</strong></p>
+      <button class="btn" name="action" value="next">{{ 'Finish' if number == total else 'Next question' }}</button>
+    {% else %}
+      <input name="answer" placeholder="Your answer" autofocus autocomplete="off" aria-label="Your answer">
+      {% if card.hint %}<details><summary>Show hint</summary>{{ card.hint }}</details>{% endif %}
+      <div class="row">
+        <button class="btn" name="action" value="submit">Submit</button>
+        <button class="btn btn-secondary" name="action" value="reveal">Show answer</button>
+      </div>
+    {% endif %}
+  </form>
+  <p class="scores">Right {{ state.scores.right }} · Wrong {{ state.scores.wrong }} · Skipped {{ state.scores.skipped }}</p>
+</section>
+{% endblock %}
